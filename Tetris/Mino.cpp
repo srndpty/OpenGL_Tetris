@@ -1,7 +1,10 @@
 #include "Mino.h"
 
+float Mino::BLOCK_SIDE_LENGTH = 0.09f;
+Vec2f Mino::BLOCK_SIZE = { BLOCK_SIDE_LENGTH, BLOCK_SIDE_LENGTH };
+Vec2f Mino::FIELD_BOT_LEFT = { -0.5f, -0.42f };
 
-Mino::Mino(Vec2 aSize, Vec2 aPos)
+Mino::Mino(Vec2f aSize, Vec2f aPos)
 {
 	vertex[0] = geom[0] = { -aSize.x / 2, +aSize.y / 2 };
 	vertex[1] = geom[1] = { +aSize.x / 2, +aSize.y / 2 };
@@ -13,12 +16,6 @@ Mino::Mino(Vec2 aSize, Vec2 aPos)
 	uv[3] = { 0, 0 };
 	pos = aPos;
 	size = aSize * 0.5f;
-	// ”½‰f
-	for (size_t i = 0; i < VERTS_COUNT; i++)
-	{
-		geom[i].x = pos.x + vertex[i].x;
-		geom[i].y = pos.y + vertex[i].y;
-	}
 }
 
 Mino::~Mino()

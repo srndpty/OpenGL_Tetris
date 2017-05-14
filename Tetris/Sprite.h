@@ -3,8 +3,9 @@
 #include "Vec2.h"
 #include "linmath.h"
 
+
 // base class for sprite object
-template<int I>
+template<int VERTS_COUNT>
 class Sprite
 {
 public:
@@ -15,6 +16,13 @@ public:
 
 	void Draw(int texId)
 	{
+		// 反映
+		for (size_t i = 0; i < VERTS_COUNT; i++)
+		{
+			geom[i].x = pos.x + vertex[i].x;
+			geom[i].y = pos.y + vertex[i].y;
+		}
+
 		mat4x4_identity(m);
 		mat4x4_translate_in_place(m, pos.x, pos.y, 0);
 		mat4x4_ortho(p, -ASPECT_RATIO, ASPECT_RATIO, -1.f, 1.f, 1.f, -1.f);
@@ -28,14 +36,14 @@ public:
 
 		// モデルの描画
 		glBindTexture(GL_TEXTURE_2D, texId);
-		glDrawArrays(GL_TRIANGLE_FAN, 0, I);
+		glDrawArrays(GL_TRIANGLE_FAN, 0, VERTS_COUNT);
 	}
 
 public:
-	Vec2 size{};
-	Vec2 pos{}; // 座標
-	Vec2 vertex[I]{}; // offset
-	Vec2 geom[I]{}; // 実際の値
-	Vec2 uv[I]{}; // uv
+	Vec2f size{};
+	Vec2f pos{}; // 座標
+	Vec2f vertex[VERTS_COUNT]{}; // offset
+	Vec2f geom[VERTS_COUNT]{}; // 実際の値
+	Vec2f uv[VERTS_COUNT]{}; // uv
 };
 

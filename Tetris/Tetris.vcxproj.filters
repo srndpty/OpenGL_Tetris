@@ -29,9 +29,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Shader.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="linmath.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -63,6 +60,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Loader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
