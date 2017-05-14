@@ -1,5 +1,5 @@
 #include "glad/glad.h"
-#include <GLFW/glfw3.h>
+#include "GLFW/glfw3.h"
 #include <string>
 #include <iostream>
 
@@ -27,12 +27,12 @@ void Shader::SetUp()
 	//バーテックスシェーダのコンパイル
 	auto vShaderId = glCreateShader(GL_VERTEX_SHADER);
 	std::string vertexShader = R"#(
-	uniform mat4 mvp;
+	uniform mat4 MVP;
 	attribute vec3 position;
 	attribute vec2 uv;
 	varying vec2 vuv;
 	void main(void){
-		gl_Position = mvp * vec4(position, 1.0);
+		gl_Position = MVP * vec4(position, 1.0);
 		vuv = uv;
 	}
 	)#";
