@@ -14,11 +14,12 @@ class Mino : public Sprite<4>
 public:
 	// static
 	static const int VERTS_COUNT = 4;
-	
+
+	Vec2i mPosition;
+
 private:
 	// non-static
 	int mDropCount;
-	Vec2i mPosition;
 
 
 	// functions
@@ -30,7 +31,8 @@ public:
 	~Mino();
 
 	// normal
-	void Drop();
+	bool Drop();
+	void Move(int x, int y);
 
 private:
 	void InitInfo(Vec2f aSize, Vec2f aPos);

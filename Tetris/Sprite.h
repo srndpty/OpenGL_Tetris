@@ -12,8 +12,7 @@ public:
 	Sprite() = default;
 	virtual ~Sprite() = default;
 
-	mat4x4 m, p, mvp;
-
+	// ï`âÊ
 	void Draw(int texId)
 	{
 		// îΩâf
@@ -45,5 +44,8 @@ public:
 	Vec2f vertex[VERTS_COUNT]{}; // offset
 	Vec2f geom[VERTS_COUNT]{}; // é¿ç€ÇÃíl
 	Vec2f uv[VERTS_COUNT]{}; // uv
+
+private:
+	mat4x4 m, p, mvp;
 };
 

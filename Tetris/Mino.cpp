@@ -19,15 +19,25 @@ Mino::~Mino()
 {
 }
 
-void Mino::Drop()
+bool Mino::Drop()
 {
-	++mDropCount;
-
-	if (mPosition.y > 0 && (mDropCount & 63) == 0)
+	if (true || mPosition.y > 0)
 	{
 		--mPosition.y;
 		ApplyPos();
+		return true;
 	}
+	else
+	{
+		return false;
+	}
+}
+
+void Mino::Move(int x, int y)
+{
+	mPosition.x += x;
+	mPosition.y += y;
+	ApplyPos();
 }
 
 void Mino::InitInfo(Vec2f aSize, Vec2f aPos)

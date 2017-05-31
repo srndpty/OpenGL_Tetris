@@ -19,6 +19,19 @@ public:
 		}
 	}
 
+	void ResetNow()
+	{
+		for (size_t i = 0; i < KEY_MAX; i++)
+		{
+			mKeyStates[i].pressed = false;
+		}
+	}
+
+	bool GetButtomDown(int key)
+	{
+		return mKeyStates[key].lastPressed == false && mKeyStates[key].pressed == true;
+	}
+
 public:
 	KeyState mKeyStates[KEY_MAX];
 };

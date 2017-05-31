@@ -74,8 +74,9 @@ auto rightScore = std::make_unique<NumTex<>>(NUM_SIZE, Vec2f{ +0.5f, 0.4f });
 
 //auto mino = std::make_unique<Mino>(Vec2f{ 0.1f, 0.1f }, Vec2f{ 0, 0 });
 
-std::unique_ptr<Mino> minoList[FIELD_SIZE.y][FIELD_SIZE.x];
+std::unique_ptr<Mino> minoList[Game::FIELD_HEIGHT][Game::FIELD_WIDTH];
 std::unique_ptr<Mino> current;
+std::unique_ptr<Game> game;
 
 // エラーコールバック
 void ErrorCallback2(int error, const char* description)
@@ -153,42 +154,60 @@ int main()
 	int leftPoint = 0, rightPoint = 0;
 
 	// ミノ生成
-	for (size_t i = 0; i < FIELD_SIZE.y; i++)
+	for (size_t i = 0; i < Game::FIELD_SIZE.y; i++)
 	{
-		for (size_t j = 0; j < FIELD_SIZE.x; j++)
+		for (size_t j = 0; j < Game::FIELD_SIZE.x; j++)
 		{
-			minoList[i][j] = std::make_unique<Mino>(Game::BLOCK_SIZE,
-				Vec2f{ Game::FIELD_BOT_LEFT.x + Game::BLOCK_SIZE.x / 2 * j,
-					Game::FIELD_BOT_LEFT.y + Game::BLOCK_SIZE.y / 2 * i});
+			minoList[i][j] = std::make_unique<Mino>(Game::BLOCK_SIZE, j, i);
 		}
 	}
 
-	current = std::make_unique<Mino>(Game::BLOCK_SIZE, 3, 15);
+	game = std::make_unique<Game>();
+	current = std::make_unique<Mino>(Game::BLOCK_SIZE, Game::FIELD_WIDTH / 2, Game::FIELD_HEIGHT);
 
 
 	// ゲームループ
 	while (!glfwWindowShouldClose(window))
 	{
 		// -- 計算 --
-		// バーの移動
-		//if (input.mKeyStates[GLFW_KEY_W].pressed)
-		//{
-		//	bar0->MoveUp();
-		//}
-		//else if (input.mKeyStates[GLFW_KEY_S].pressed)
-		//{
-		//	bar0->MoveDown();
-		//}
 
-		//if (input.mKeyStates[GLFW_KEY_UP].pressed)
-		//{
-		//	bar1->MoveUp();
-		//}
-		//else if (input.mKeyStates[GLFW_KEY_DOWN].pressed)
-		//{
-		//	bar1->MoveDown();
-		//}
+		// 全体処理
+		game->Process();
 
+		// 左右移動
+		if (input.GetButtomDown(GLFW_KEY_A))
+		{
+			if (game->IsMovable(*current, -1, 0))
+			{
+				current->Move(-1, 0);
+			}
+		}
+		else if (input.GetButtomDown(GLFW_KEY_D))
+		{
+			if (game->IsMovable(*current, +1, 0))
+			{
+				current->Move(+1, 0);
+			}
+		}
+
+
+		// 落下
+		if (game->mToBeDropped)
+		{
+			if (game->IsDroppable(*current))
+			{
+				current->Move(0, -1);
+			}
+			else
+			{
+				game->PlaceCurrent(*current);
+				current->mPosition = { Game::FIELD_WIDTH / 2, Game::FIELD_HEIGHT };
+			}
+			game->mToBeDropped = false;
+		}
+
+		input.Update();
+		input.ResetNow();
 
 		// -- 描画 -- 
 		// 画面の初期化
@@ -198,15 +217,17 @@ int main()
 
 		//mino->Draw(minoId);
 
-		for (size_t i = 0; i < FIELD_SIZE.y; i++)
+		for (size_t i = 0; i < Game::FIELD_SIZE.y; i++)
 		{
-			for (size_t j = 0; j < FIELD_SIZE.x; j++)
+			for (size_t j = 0; j < Game::FIELD_SIZE.x; j++)
 			{
-				//minoList[i][j]->Draw(minoId);
+				if (game->mExists[i][j])
+				{
+					minoList[i][j]->Draw(minoId);
+				}
 			}
 		}
 
-		current->Drop();
 		current->Draw(minoId);
 
 		glfwSwapBuffers(window);
@@ -214,6 +235,9 @@ int main()
 	}
 
 	glfwTerminate();
+
+	//delete game;
+	//delete current;
 
 	return 0;
 }
