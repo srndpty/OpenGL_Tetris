@@ -40,6 +40,13 @@ void Mino::Move(int x, int y)
 	ApplyPos();
 }
 
+void Mino::SetPos(int x, int y)
+{
+	mPosition.x = x;
+	mPosition.y = y;
+	ApplyPos();
+}
+
 void Mino::InitInfo(Vec2f aSize, Vec2f aPos)
 {
 	vertex[0] = geom[0] = { -aSize.x / 2, +aSize.y / 2 };

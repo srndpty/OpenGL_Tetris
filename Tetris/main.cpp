@@ -208,7 +208,8 @@ int main()
 			else
 			{
 				game->PlaceCurrent(*current);
-				current->mPosition = { Game::FIELD_WIDTH / 2, Game::FIELD_HEIGHT };
+				game->DropLines();
+				current->SetPos(Game::FIELD_WIDTH / 2, Game::FIELD_HEIGHT);
 			}
 			game->mToBeDropped = false;
 		}

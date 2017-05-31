@@ -55,3 +55,37 @@ void Game::PlaceCurrent(const Mino& mino)
 	mExists[mino.mPosition.y][mino.mPosition.x] = true;
 }
 
+void Game::DropLines()
+{
+	int targetLine = 1;
+
+	for (size_t i = 1; i < FIELD_HEIGHT; i++)
+	{
+		MoveLine(i, targetLine);
+		if (!IsLineFilled(i))
+		{
+			++targetLine;
+		}
+	}
+}
+
+bool Game::IsLineFilled(int y)
+{
+	for (size_t i = 1; i < FIELD_WIDTH - 1; i++)
+	{
+		if (!mExists[y][i])
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+void Game::MoveLine(int from, int to)
+{
+	for (size_t i = 1; i < FIELD_WIDTH - 1; i++)
+	{
+		mExists[to][i] = mExists[from][i];
+	}
+}
+

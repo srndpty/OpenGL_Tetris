@@ -12,7 +12,7 @@ public:
 
 	static const int FIELD_WIDTH = 10 + 2;
 	static const int FIELD_HEIGHT = 20 + 1;
-	static const int DROP_INTERVAL = 20;
+	static const int DROP_INTERVAL = 5;
 	static Vec2i FIELD_SIZE;
 
 	bool mExists[FIELD_HEIGHT][FIELD_WIDTH];
@@ -31,6 +31,8 @@ public:
 	bool IsDroppable(const Mino& mino);
 	bool IsMovable(const Mino& mino, int horizontal, int vertical);
 	void PlaceCurrent(const Mino& mino);
-
+	void DropLines();
+	bool IsLineFilled(int y);
+	void MoveLine(int from, int to);
 };
 

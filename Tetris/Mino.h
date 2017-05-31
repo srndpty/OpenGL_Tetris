@@ -33,6 +33,7 @@ public:
 	// normal
 	bool Drop();
 	void Move(int x, int y);
+	void SetPos(int x, int y);
 
 private:
 	void InitInfo(Vec2f aSize, Vec2f aPos);
