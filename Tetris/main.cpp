@@ -171,57 +171,64 @@ int main()
 	while (!glfwWindowShouldClose(window))
 	{
 		// -- 計算 --
+		if (game->IsGameOver())
+		{
+			std::cout << "Game Over!\n";
+		}
+		else
+		{
+			// 全体処理
+			game->Process();
 
-		// 全体処理
-		game->Process();
-
-		// 左右移動
-		if (input.GetButtomDown(GLFW_KEY_A))
-		{
-			if (game->IsMovable(*current, -1, 0))
+			// 左右移動
+			if (input.GetButtomDown(GLFW_KEY_A))
 			{
-				current->Move({ -1, 0 });
+				if (game->IsMovable(*current, -1, 0))
+				{
+					current->Move({ -1, 0 });
+				}
 			}
-		}
-		else if (input.GetButtomDown(GLFW_KEY_D))
-		{
-			if (game->IsMovable(*current, +1, 0))
+			else if (input.GetButtomDown(GLFW_KEY_D))
 			{
-				current->Move({ +1, 0 });
+				if (game->IsMovable(*current, +1, 0))
+				{
+					current->Move({ +1, 0 });
+				}
 			}
-		}
-		else if (input.GetButtomDown(GLFW_KEY_S))
-		{
-			if (game->IsMovable(*current, 0, -1))
+			else if (input.GetButtomDown(GLFW_KEY_S))
 			{
-				current->Move({ 0, -1 });
+				if (game->IsMovable(*current, 0, -1))
+				{
+					current->Move({ 0, -1 });
+				}
 			}
-		}
-		else if (input.GetButtomDown(GLFW_KEY_W))
-		{
-			if (game->IsRotatable(*current))
+			else if (input.GetButtomDown(GLFW_KEY_W))
 			{
-				current->Rotate();
+				if (game->IsRotatable(*current))
+				{
+					current->Rotate();
+				}
 			}
-		}
 
 
-		// 落下
-		if (game->mToBeDropped)
-		{
-			if (game->IsMovable(*current, 0, -1))
+			// 落下
+			if (game->mToBeDropped)
 			{
-				current->Move({ 0, -1 });
+				if (game->IsMovable(*current, 0, -1))
+				{
+					current->Move({ 0, -1 });
+				}
+				else
+				{
+					game->PlaceCurrent(*current);
+					game->DropLines();
+					current->SetType(random(TetriMino::MINO_TYPE_MAX));
+					current->SetPos({ Game::FIELD_WIDTH / 2, Game::FIELD_HEIGHT });
+				}
+				game->mToBeDropped = false;
 			}
-			else
-			{
-				game->PlaceCurrent(*current);
-				game->DropLines();
-				current->SetType(random(TetriMino::MINO_TYPE_MAX));
-				current->SetPos({ Game::FIELD_WIDTH / 2, Game::FIELD_HEIGHT });
-			}
-			game->mToBeDropped = false;
 		}
+
 
 		input.Update();
 		input.ResetNow();

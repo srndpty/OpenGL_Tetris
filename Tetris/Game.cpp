@@ -80,6 +80,9 @@ void Game::PlaceCurrent(const TetriMino & mino)
 {
 	for (size_t i = 0; i < TetriMino::MINO_MAX; i++)
 	{
+		// ã‚Ì•”•ª‚Í–³Ž‹
+		if (mino.mMinos[i]->mPosition.y >= FIELD_HEIGHT) continue;
+
 		mExists[mino.mMinos[i]->mPosition.y][mino.mMinos[i]->mPosition.x] = true;
 	}
 }
@@ -116,5 +119,10 @@ void Game::MoveLine(int from, int to)
 	{
 		mExists[to][i] = mExists[from][i];
 	}
+}
+
+bool Game::IsGameOver()
+{
+	return mExists[Game::FIELD_HEIGHT - Game::SENTINELS_COUNT - 1][Game::FIELD_WIDTH / 2];
 }
 

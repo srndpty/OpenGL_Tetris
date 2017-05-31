@@ -13,7 +13,7 @@ public:
 
 	static const int SENTINELS_COUNT = 2;
 	static const int FIELD_WIDTH = 10 + SENTINELS_COUNT * 2;
-	static const int FIELD_HEIGHT = 20 + SENTINELS_COUNT;
+	static const int FIELD_HEIGHT = 20 + SENTINELS_COUNT * 2; // ゲームオーバー判定用の上の部分を追加
 	static const int DROP_INTERVAL = 20;
 	static Vec2i FIELD_SIZE;
 
@@ -39,5 +39,6 @@ public:
 	void DropLines();
 	bool IsLineFilled(int y);
 	void MoveLine(int from, int to);
+	bool IsGameOver();
 };
 
