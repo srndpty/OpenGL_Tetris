@@ -13,7 +13,7 @@ Game::Game()
 	{
 		for (size_t j = 0; j < FIELD_WIDTH; j++)
 		{
-			if (j >= FIELD_WIDTH - SENTINELS_COUNT || j < SENTINELS_COUNT || i < SENTINELS_COUNT)
+			if (j >= FIELD_WIDTH - SENTINELS_COUNT * 2 || j < SENTINELS_COUNT || i < SENTINELS_COUNT)
 			{
 				mExists[i][j] = true;
 			}
@@ -49,7 +49,7 @@ bool Game::IsMovable(const TetriMino & mino, int horizontal, int vertical)
 {
 	for (size_t i = 0; i < TetriMino::MINO_MAX; i++)
 	{
-		if (mExists[mino.mMinos[i].mPosition.y + vertical][mino.mMinos[i].mPosition.x + horizontal])
+		if (mExists[mino.mMinos[i]->mPosition.y + vertical][mino.mMinos[i]->mPosition.x + horizontal])
 		{
 			return false;
 		}
@@ -66,7 +66,7 @@ void Game::PlaceCurrent(const TetriMino & mino)
 {
 	for (size_t i = 0; i < TetriMino::MINO_MAX; i++)
 	{
-		mExists[mino.mMinos[i].mPosition.y][mino.mMinos[i].mPosition.x] = true;
+		mExists[mino.mMinos[i]->mPosition.y][mino.mMinos[i]->mPosition.x] = true;
 	}
 }
 

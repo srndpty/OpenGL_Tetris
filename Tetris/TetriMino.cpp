@@ -1,4 +1,3 @@
-#include <cassert>
 
 #include "TetriMino.h"
 
@@ -21,6 +20,10 @@ TetriMino::TetriMino()
 
 TetriMino::TetriMino(Vec2i aPos)
 {
+	for (size_t i = 0; i < MINO_MAX; i++)
+	{
+		mMinos[i] = std::make_unique<Mino>(0, 0);
+	}
 	mPosition = aPos;
 	SetType(0);
 	SetPos(mPosition);
@@ -36,15 +39,16 @@ void TetriMino::SetType(int type)
 
 	for (size_t i = 0; i < MINO_MAX; i++)
 	{
-		mMinos[i].mOffset = minoTypes[type].offset[i];
+		mMinos[i]->mOffset = minoTypes[type].offset[i];
 	}
 }
 
 void TetriMino::SetPos(const Vec2i& pos)
 {
+	mPosition = pos;
 	for (size_t i = 0; i < MINO_MAX; i++)
 	{
-		mMinos[i].SetPos(pos + mMinos[i].mOffset);
+		mMinos[i]->SetPos(pos + mMinos[i]->mOffset);
 	}
 }
 
@@ -58,6 +62,6 @@ void TetriMino::Draw(int texId)
 {
 	for (size_t i = 0; i < MINO_MAX; i++)
 	{
-		mMinos[i].Draw(texId);
+		mMinos[i]->Draw(texId);
 	}
 }

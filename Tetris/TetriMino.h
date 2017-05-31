@@ -1,5 +1,8 @@
 #pragma once
 
+#include <cassert>
+#include <memory>
+
 #include "Mino.h"
 
 struct MinoType;
@@ -13,7 +16,7 @@ public:
 
 public:
 	Vec2i mPosition;
-	Mino mMinos[MINO_MAX]{};
+	std::unique_ptr<Mino> mMinos[MINO_MAX];
 	int mType;
 
 public:
