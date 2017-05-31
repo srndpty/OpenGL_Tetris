@@ -2,6 +2,7 @@
 
 #include "Vec2.h"
 #include "Mino.h"
+#include "TetriMino.h"
 
 class Game
 {
@@ -10,8 +11,9 @@ public:
 	static Vec2f BLOCK_SIZE;
 	static Vec2f FIELD_BOT_LEFT;
 
-	static const int FIELD_WIDTH = 10 + 2;
-	static const int FIELD_HEIGHT = 20 + 1;
+	static const int SENTINELS_COUNT = 2;
+	static const int FIELD_WIDTH = 10 + SENTINELS_COUNT * 2;
+	static const int FIELD_HEIGHT = 20 + SENTINELS_COUNT;
 	static const int DROP_INTERVAL = 5;
 	static Vec2i FIELD_SIZE;
 
@@ -28,9 +30,10 @@ public:
 
 	// normal
 	void Process();
-	bool IsDroppable(const Mino& mino);
 	bool IsMovable(const Mino& mino, int horizontal, int vertical);
+	bool IsMovable(const TetriMino& mino, int horizontal, int vertical);
 	void PlaceCurrent(const Mino& mino);
+	void PlaceCurrent(const TetriMino& mino);
 	void DropLines();
 	bool IsLineFilled(int y);
 	void MoveLine(int from, int to);

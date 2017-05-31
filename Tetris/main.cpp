@@ -16,6 +16,7 @@
 #include "Collision.h"
 #include "Loader.h"
 #include "Game.h"
+#include "TetriMino.h"
 
 #pragma comment(lib, "opengl32.lib")
 
@@ -75,7 +76,7 @@ auto rightScore = std::make_unique<NumTex<>>(NUM_SIZE, Vec2f{ +0.5f, 0.4f });
 //auto mino = std::make_unique<Mino>(Vec2f{ 0.1f, 0.1f }, Vec2f{ 0, 0 });
 
 std::unique_ptr<Mino> minoList[Game::FIELD_HEIGHT][Game::FIELD_WIDTH];
-std::unique_ptr<Mino> current;
+std::unique_ptr<TetriMino> current;
 std::unique_ptr<Game> game;
 
 // エラーコールバック
@@ -146,7 +147,6 @@ int main()
 	gladLoadGLLoader(addr);
 	glfwSwapInterval(1);
 
-	//GLuint programId = CreateShader();
 	shader.SetUp();
 
 	GLuint minoId = LoadBmp("mino.bmp");
@@ -154,17 +154,16 @@ int main()
 	int leftPoint = 0, rightPoint = 0;
 
 	// ミノ生成
-	for (size_t i = 0; i < Game::FIELD_SIZE.y; i++)
+	for (int i = 0; i < Game::FIELD_SIZE.y; i++)
 	{
-		for (size_t j = 0; j < Game::FIELD_SIZE.x; j++)
+		for (int j = 0; j < Game::FIELD_SIZE.x; j++)
 		{
-			minoList[i][j] = std::make_unique<Mino>(Game::BLOCK_SIZE, j, i);
+			minoList[i][j] = std::make_unique<Mino>(j, i);
 		}
 	}
 
 	game = std::make_unique<Game>();
-	current = std::make_unique<Mino>(Game::BLOCK_SIZE, Game::FIELD_WIDTH / 2, Game::FIELD_HEIGHT);
-
+	current = std::make_unique<TetriMino>(Vec2i{ Game::FIELD_WIDTH / 2, Game::FIELD_HEIGHT });
 
 	// ゲームループ
 	while (!glfwWindowShouldClose(window))
@@ -179,37 +178,36 @@ int main()
 		{
 			if (game->IsMovable(*current, -1, 0))
 			{
-				current->Move(-1, 0);
+				current->Move({ -1, 0 });
 			}
 		}
 		else if (input.GetButtomDown(GLFW_KEY_D))
 		{
 			if (game->IsMovable(*current, +1, 0))
 			{
-				current->Move(+1, 0);
+				current->Move({ +1, 0 });
 			}
 		}
 		else if (input.GetButtomDown(GLFW_KEY_S))
 		{
 			if (game->IsMovable(*current, 0, -1))
 			{
-				current->Move(0, -1);
+				current->Move({ 0, -1 });
 			}
 		}
-
 
 		// 落下
 		if (game->mToBeDropped)
 		{
-			if (game->IsDroppable(*current))
+			if (game->IsMovable(*current, 0, -1))
 			{
-				current->Move(0, -1);
+				current->Move({ 0, -1 });
 			}
 			else
 			{
 				game->PlaceCurrent(*current);
 				game->DropLines();
-				current->SetPos(Game::FIELD_WIDTH / 2, Game::FIELD_HEIGHT);
+				current->SetPos({ Game::FIELD_WIDTH / 2, Game::FIELD_HEIGHT });
 			}
 			game->mToBeDropped = false;
 		}
@@ -222,8 +220,6 @@ int main()
 		glClearColor(0.2f, 0.2f, 0.2f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearDepth(1.0);
-
-		//mino->Draw(minoId);
 
 		for (size_t i = 0; i < Game::FIELD_SIZE.y; i++)
 		{
@@ -243,9 +239,6 @@ int main()
 	}
 
 	glfwTerminate();
-
-	//delete game;
-	//delete current;
 
 	return 0;
 }

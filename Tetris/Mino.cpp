@@ -1,49 +1,41 @@
+#include <iostream>
+
 #include "Game.h"
 #include "Mino.h"
 
 
-Mino::Mino(Vec2f aSize, Vec2f aPos)
+Mino::Mino()
 {
-	InitInfo(aSize, aPos);
+	std::cout << "Mino default constructor called.\n";
 }
 
-Mino::Mino(Vec2f aSize, int aX, int aY)
+Mino::Mino(Vec2f aPos)
+{
+	InitInfo(Game::BLOCK_SIZE, aPos);
+}
+
+Mino::Mino(int aX, int aY)
 {
 	mPosition = { aX, aY };
 	Vec2f pos { Game::FIELD_BOT_LEFT.x + Game::BLOCK_SIZE.x / 2 * aX,
 		Game::FIELD_BOT_LEFT.y + Game::BLOCK_SIZE.y / 2 * aY };
-	InitInfo(aSize, pos);
+	InitInfo(Game::BLOCK_SIZE, pos);
 }
 
 Mino::~Mino()
 {
 }
 
-bool Mino::Drop()
-{
-	if (true || mPosition.y > 0)
-	{
-		--mPosition.y;
-		ApplyPos();
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
 
-void Mino::Move(int x, int y)
+void Mino::Move(const Vec2i& amount)
 {
-	mPosition.x += x;
-	mPosition.y += y;
+	mPosition += amount;
 	ApplyPos();
 }
 
-void Mino::SetPos(int x, int y)
+void Mino::SetPos(const Vec2i& pos)
 {
-	mPosition.x = x;
-	mPosition.y = y;
+	mPosition = pos;
 	ApplyPos();
 }
 

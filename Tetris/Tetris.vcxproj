@@ -151,6 +151,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mino.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="TetriMino.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision.h" />
@@ -165,6 +166,7 @@
     <ClInclude Include="Mino.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="TetriMino.h" />
     <ClInclude Include="Vec2.h" />
   </ItemGroup>
   <ItemGroup>

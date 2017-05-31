@@ -18,6 +18,30 @@ public:
 	{
 		return{ x * a, y * a };
 	}
+
+	Vec2 operator+(const Vec2& a)
+	{
+		return{ x + a.x, y + a.y };
+	}
+
+	const Vec2 operator+(const Vec2& a) const
+	{
+		return { x + a.x, y + a.y };
+	}
+
+	Vec2& operator+=(Vec2 a)
+	{
+		x += a.x;
+		y += a.y;
+		return *this;
+	}
+
+	const Vec2& operator+=(Vec2 a) const
+	{
+		x += a.x;
+		y += a.y;
+		return *this;
+	}
 };
 
 using Vec2f = Vec2<float>;

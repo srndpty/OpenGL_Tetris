@@ -1,8 +1,13 @@
 #pragma once
 
+#include "glad/glad.h"
+#include "GLFW/glfw3.h"
 #include "Vec2.h"
 #include "linmath.h"
+#include "Def.h"
+#include "Shader.h"
 
+extern Shader shader;
 
 // base class for sprite object
 template<int VERTS_COUNT>
