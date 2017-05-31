@@ -17,6 +17,7 @@
 #include "Loader.h"
 #include "Game.h"
 #include "TetriMino.h"
+#include "Random.h"
 
 #pragma comment(lib, "opengl32.lib")
 
@@ -24,6 +25,7 @@ static Vec2f NUM_SIZE = { 0.15f, 0.15f };
 
 Input input;
 Shader shader;
+Random random;
 
 template<int VertsCount = 4>
 class NumTex : public Sprite<VertsCount>
@@ -207,6 +209,7 @@ int main()
 			{
 				game->PlaceCurrent(*current);
 				game->DropLines();
+				current->SetType(random(TetriMino::MINO_TYPE_MAX));
 				current->SetPos({ Game::FIELD_WIDTH / 2, Game::FIELD_HEIGHT });
 			}
 			game->mToBeDropped = false;

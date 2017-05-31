@@ -150,6 +150,7 @@
     <ClCompile Include="glad\glad.c" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mino.cpp" />
+    <ClCompile Include="Random.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="TetriMino.cpp" />
   </ItemGroup>
@@ -164,6 +165,7 @@
     <ClInclude Include="linmath.h" />
     <ClInclude Include="Loader.h" />
     <ClInclude Include="Mino.h" />
+    <ClInclude Include="Random.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="TetriMino.h" />

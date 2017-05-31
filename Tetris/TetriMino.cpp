@@ -1,6 +1,9 @@
 
 #include "TetriMino.h"
 
+#include "Random.h"
+
+extern Random random;
 
 MinoType TetriMino::minoTypes[MINO_TYPE_MAX] =
 {
@@ -25,7 +28,7 @@ TetriMino::TetriMino(Vec2i aPos)
 		mMinos[i] = std::make_unique<Mino>(0, 0);
 	}
 	mPosition = aPos;
-	SetType(0);
+	SetType(random(MINO_TYPE_MAX));
 	SetPos(mPosition);
 }
 
