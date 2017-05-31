@@ -57,6 +57,20 @@ bool Game::IsMovable(const TetriMino & mino, int horizontal, int vertical)
 	return true;
 }
 
+bool Game::IsRotatable(const TetriMino & mino)
+{
+	for (size_t i = 0; i < TetriMino::MINO_MAX; i++)
+	{
+		auto tmp = mino.mMinos[i]->mOffset;
+		if (mExists[mino.mPosition.y + -tmp.x][mino.mPosition.x + tmp.y])
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+
 void Game::PlaceCurrent(const Mino& mino)
 {
 	mExists[mino.mPosition.y][mino.mPosition.x] = true;

@@ -30,6 +30,7 @@ public:
 	void SetPos(const Vec2i& pos);
 	void Move(const Vec2i& amount);
 	void Draw(int texId);
+	void Rotate();
 };
 
 struct MinoType

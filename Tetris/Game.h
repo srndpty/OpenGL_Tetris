@@ -14,11 +14,12 @@ public:
 	static const int SENTINELS_COUNT = 2;
 	static const int FIELD_WIDTH = 10 + SENTINELS_COUNT * 2;
 	static const int FIELD_HEIGHT = 20 + SENTINELS_COUNT;
-	static const int DROP_INTERVAL = 5;
+	static const int DROP_INTERVAL = 20;
 	static Vec2i FIELD_SIZE;
 
 	bool mExists[FIELD_HEIGHT][FIELD_WIDTH];
 	bool mToBeDropped = false;
+	bool mToBeRotated = false;
 
 private:
 	int mDropCount = 0;
@@ -32,6 +33,7 @@ public:
 	void Process();
 	bool IsMovable(const Mino& mino, int horizontal, int vertical);
 	bool IsMovable(const TetriMino& mino, int horizontal, int vertical);
+	bool IsRotatable(const TetriMino& mino);
 	void PlaceCurrent(const Mino& mino);
 	void PlaceCurrent(const TetriMino& mino);
 	void DropLines();

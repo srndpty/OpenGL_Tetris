@@ -68,3 +68,14 @@ void TetriMino::Draw(int texId)
 		mMinos[i]->Draw(texId);
 	}
 }
+
+void TetriMino::Rotate()
+{
+	for (size_t i = 0; i < MINO_MAX; i++)
+	{
+		auto tmp = mMinos[i]->mOffset;
+		mMinos[i]->mOffset.x = tmp.y;
+		mMinos[i]->mOffset.y = -tmp.x;
+	}
+	SetPos(mPosition);
+}

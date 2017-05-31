@@ -197,6 +197,14 @@ int main()
 				current->Move({ 0, -1 });
 			}
 		}
+		else if (input.GetButtomDown(GLFW_KEY_W))
+		{
+			if (game->IsRotatable(*current))
+			{
+				current->Rotate();
+			}
+		}
+
 
 		// —Ž‰º
 		if (game->mToBeDropped)
