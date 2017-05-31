@@ -10,16 +10,31 @@ struct XY
 // テトリミノ1個分のオブジェクト
 class Mino : public Sprite<4>
 {
+	// variables
 public:
+	// static
 	static const int VERTS_COUNT = 4;
-	static float BLOCK_SIDE_LENGTH;
-	static Vec2f BLOCK_SIZE;
-	static Vec2f FIELD_BOT_LEFT;
+	
+private:
+	// non-static
+	int mDropCount;
+	Vec2i mPosition;
 
+
+	// functions
 public:
+	// special
 	Mino() = delete;
 	Mino(Vec2f aSize, Vec2f aPos);
+	Mino(Vec2f aSize, int aX, int aY);
 	~Mino();
+
+	// normal
+	void Drop();
+
+private:
+	void InitInfo(Vec2f aSize, Vec2f aPos);
+	void ApplyPos();
 };
 
 

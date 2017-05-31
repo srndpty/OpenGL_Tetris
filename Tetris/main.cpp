@@ -15,6 +15,7 @@
 #include "Mino.h"
 #include "Collision.h"
 #include "Loader.h"
+#include "Game.h"
 
 #pragma comment(lib, "opengl32.lib")
 
@@ -74,6 +75,7 @@ auto rightScore = std::make_unique<NumTex<>>(NUM_SIZE, Vec2f{ +0.5f, 0.4f });
 //auto mino = std::make_unique<Mino>(Vec2f{ 0.1f, 0.1f }, Vec2f{ 0, 0 });
 
 std::unique_ptr<Mino> minoList[FIELD_SIZE.y][FIELD_SIZE.x];
+std::unique_ptr<Mino> current;
 
 // エラーコールバック
 void ErrorCallback2(int error, const char* description)
@@ -155,11 +157,13 @@ int main()
 	{
 		for (size_t j = 0; j < FIELD_SIZE.x; j++)
 		{
-			minoList[i][j] = std::make_unique<Mino>(Mino::BLOCK_SIZE,
-				Vec2f{ Mino::FIELD_BOT_LEFT.x + Mino::BLOCK_SIZE.x / 2 * j,
-					Mino::FIELD_BOT_LEFT.y + Mino::BLOCK_SIZE.y / 2 * i});
+			minoList[i][j] = std::make_unique<Mino>(Game::BLOCK_SIZE,
+				Vec2f{ Game::FIELD_BOT_LEFT.x + Game::BLOCK_SIZE.x / 2 * j,
+					Game::FIELD_BOT_LEFT.y + Game::BLOCK_SIZE.y / 2 * i});
 		}
 	}
+
+	current = std::make_unique<Mino>(Game::BLOCK_SIZE, 3, 15);
 
 
 	// ゲームループ
@@ -198,10 +202,12 @@ int main()
 		{
 			for (size_t j = 0; j < FIELD_SIZE.x; j++)
 			{
-				minoList[i][j]->Draw(minoId);
+				//minoList[i][j]->Draw(minoId);
 			}
 		}
 
+		current->Drop();
+		current->Draw(minoId);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
