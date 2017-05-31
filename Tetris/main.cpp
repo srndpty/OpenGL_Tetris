@@ -189,6 +189,13 @@ int main()
 				current->Move(+1, 0);
 			}
 		}
+		else if (input.GetButtomDown(GLFW_KEY_S))
+		{
+			if (game->IsMovable(*current, 0, -1))
+			{
+				current->Move(0, -1);
+			}
+		}
 
 
 		// —Ž‰º
