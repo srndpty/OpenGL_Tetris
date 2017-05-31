@@ -3,8 +3,8 @@
 
 float Game::BLOCK_SIDE_LENGTH = 0.09f;
 Vec2f Game::BLOCK_SIZE = { BLOCK_SIDE_LENGTH, BLOCK_SIDE_LENGTH };
-Vec2f Game::FIELD_BOT_LEFT = { -0.55f, -0.45f };
-Vec2i Game::FIELD_SIZE = { 10 + SENTINELS_COUNT, 20 + SENTINELS_COUNT };
+Vec2f Game::FIELD_BOT_LEFT = { -0.55f, -0.50f };
+Vec2i Game::FIELD_SIZE = { FIELD_WIDTH, FIELD_HEIGHT };
 
 Game::Game()
 	//:mExists{}
@@ -13,7 +13,7 @@ Game::Game()
 	{
 		for (size_t j = 0; j < FIELD_WIDTH; j++)
 		{
-			if (j >= FIELD_WIDTH - SENTINELS_COUNT * 2 || j < SENTINELS_COUNT || i < SENTINELS_COUNT)
+			if (j >= FIELD_WIDTH - SENTINELS_COUNT || j < SENTINELS_COUNT || i < SENTINELS_COUNT)
 			{
 				mExists[i][j] = true;
 			}
