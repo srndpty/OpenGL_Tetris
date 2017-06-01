@@ -41,6 +41,7 @@ public:
 struct MinoType
 {
 	Vec2i offset[TetriMino::MINO_MAX];
+	Vec4f color; // êFÅiRGBAÅj
 };
 
 

@@ -9,6 +9,7 @@ const char* Shader::ID_position = "position";
 const char* Shader::ID_uv = "uv";
 const char* Shader::ID_texture = "texture";
 const char* Shader::ID_MVP = "MVP";
+const char* Shader::ID_color = "color";
 
 //--------------------------------------------------------------------------------
 Shader::Shader()
@@ -33,10 +34,13 @@ void Shader::SetUp()
 	uniform mat4 MVP;
 	attribute vec3 position;
 	attribute vec2 uv;
+	attribute vec4 color;
+	varying vec4 vcolor;
 	varying vec2 vuv;
 	void main(void){
 		gl_Position = MVP * vec4(position, 1.0);
 		vuv = uv;
+		vcolor = color;
 	}
 	)#";
 	const char* vs = vertexShader.c_str();
@@ -47,9 +51,10 @@ void Shader::SetUp()
 	GLuint fShaderId = glCreateShader(GL_FRAGMENT_SHADER);
 	std::string fragmentShader = R"#(
 	varying vec2 vuv;
+	varying vec4 vcolor;
 	uniform sampler2D texture;
 	void main(void){
-		gl_FragColor = texture2D(texture, vuv);
+		gl_FragColor = texture2D(texture, vuv) * vcolor;
 	}
 	)#";
 	const char* fs = fragmentShader.c_str();
@@ -81,18 +86,24 @@ void Shader::SetUp()
 	mTextureLocation  = glGetUniformLocation(programId, Shader::ID_texture);
 	if (mTextureLocation == -1)
 	{
-		std::cerr << "glGetAttribLocation failed " << Shader::ID_texture << "\n";
+		std::cerr << "glGetUniformLocation failed " << Shader::ID_texture << "\n";
 	}
 	mMvpLocation      = glGetUniformLocation(programId, Shader::ID_MVP);
 	if (mMvpLocation == -1)
 	{
-		std::cerr << "glGetAttribLocation failed " << Shader::ID_MVP << "\n";
+		std::cerr << "glGetUniformLocation failed " << Shader::ID_MVP << "\n";
+	}
+	mColorLocation    = glGetAttribLocation(programId, Shader::ID_color);
+	if (mColorLocation == -1)
+	{
+		std::cerr << "glGetAttribLocation failed " << Shader::ID_color << "\n";
 	}
 
 	// attribute‘®«‚ð—LŒø‚É‚·‚é
 	glEnableVertexAttribArray(mPositionLocation);
 	glEnableVertexAttribArray(mUvLocation);
 	glEnableVertexAttribArray(mMvpLocation);
+	glEnableVertexAttribArray(mColorLocation);
 
 	// uniform‘®«‚ðÝ’è‚·‚é
 	glUniform1i(mTextureLocation, 0);

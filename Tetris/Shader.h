@@ -14,12 +14,14 @@ public:
 	static const char* ID_uv;
 	static const char* ID_texture;
 	static const char* ID_MVP;
+	static const char* ID_color;
 
 public:
 	int mPositionLocation;
 	int mUvLocation;
 	int mTextureLocation;
 	int mMvpLocation;
+	int mColorLocation;
 
 private:
 	GLuint mProgramId;

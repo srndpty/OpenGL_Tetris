@@ -170,6 +170,7 @@
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="TetriMino.h" />
     <ClInclude Include="Vec2.h" />
+    <ClInclude Include="Vec4.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -6,6 +6,7 @@
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 #include "Vec2.h"
+#include "Vec4.h"
 #include "linmath.h"
 #include "Def.h"
 #include "Shader.h"
@@ -18,7 +19,19 @@ class Sprite
 {
 public:
 	/// special
-	Sprite() = default;
+	// default ctor
+	Sprite()
+	{
+		SetColor({ 1.0f, 1.0f, 1.0f, 1.0f });
+	}
+
+	// ctor init color
+	Sprite(const vec4& v)
+	{
+		SetColor(v);
+	}
+
+	// dtor
 	virtual ~Sprite() = default;
 
 	/// normal
@@ -42,10 +55,19 @@ public:
 		// attribute属性を登録
 		glVertexAttribPointer(shader.mPositionLocation, 2, GL_FLOAT, false, 0, geom);
 		glVertexAttribPointer(shader.mUvLocation, 2, GL_FLOAT, false, 0, uv);
+		glVertexAttribPointer(shader.mColorLocation, 4, GL_FLOAT, false, 0, (const float*)&color);
 
 		// モデルの描画
 		glBindTexture(GL_TEXTURE_2D, texId);
 		glDrawArrays(GL_TRIANGLE_FAN, 0, VERTS_COUNT);
+	}
+
+	void SetColor(Vec4f col)
+	{
+		for (size_t i = 0; i < VERTS_COUNT; i++)
+		{
+			color[i] = col;
+		}
 	}
 
 public:
@@ -54,6 +76,7 @@ public:
 	Vec2f vertex[VERTS_COUNT]{}; // 中心座標からのoffset（固定）
 	Vec2f geom[VERTS_COUNT]{}; // 実際のワールド座標
 	Vec2f uv[VERTS_COUNT]{}; // uv
+	Vec4f color[VERTS_COUNT]{}; // tint color
 
 private:
 	mat4x4 m, p, mvp; // 計算用変数
