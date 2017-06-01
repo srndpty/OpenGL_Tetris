@@ -1,9 +1,13 @@
+// Game.h
+// ゲーム全体の制御
+
 #pragma once
 
 #include "Vec2.h"
 #include "Mino.h"
 #include "TetriMino.h"
 
+// ゲームのロジック管理
 class Game
 {
 public:
@@ -17,28 +21,31 @@ public:
 	static const int DROP_INTERVAL = 20;
 	static Vec2i FIELD_SIZE;
 
-	bool mExists[FIELD_HEIGHT][FIELD_WIDTH];
-	bool mToBeDropped = false;
-	bool mToBeRotated = false;
+	bool mExists[FIELD_HEIGHT][FIELD_WIDTH]; // 各マス目にブロックが存在するか否か
+	bool mToBeDropped = false; // テトリミノの落下を試みるかどうか
+	bool mToBeRotated = false; // テトリミノの回転を試みるかどうか
 
 private:
-	int mDropCount = 0;
+	int mDropCount = 0; // 落下のためのフレームカウンタ
 
 public:
-	// special
+	/// special
 	Game();
 	~Game();
 
-	// normal
-	void Process();
-	bool IsMovable(const Mino& mino, int horizontal, int vertical);
-	bool IsMovable(const TetriMino& mino, int horizontal, int vertical);
-	bool IsRotatable(const TetriMino& mino);
-	void PlaceCurrent(const Mino& mino);
-	void PlaceCurrent(const TetriMino& mino);
-	void DropLines();
-	bool IsLineFilled(int y);
-	void MoveLine(int from, int to);
-	bool IsGameOver();
+	/// normal
+	void Process(); // マイフレームの処理
+	bool IsMovable(const Mino& mino, int horizontal, int vertical); // 移動可能判定
+	bool IsMovable(const TetriMino& mino, int horizontal, int vertical); // 移動可能判定
+	bool IsRotatable(const TetriMino& mino); // 回転可能判定
+	void PlaceCurrent(const Mino& mino); // 現在のオブジェクトを今の位置で設置確定させる
+	void PlaceCurrent(const TetriMino& mino); // 現在のオブジェクトを今の位置で設置確定させる
+	void DropLines(); // そろっているラインを検出し、ブロックを全体的に卸す
+	bool IsGameOver(); // ゲームオーバー判定
+
+private:
+	bool IsLineFilled(int y); // 指定の列が埋まっているかどうか
+	void MoveLine(int from, int to); // ラインの移動
+
 };
 

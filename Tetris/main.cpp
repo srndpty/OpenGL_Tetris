@@ -81,12 +81,14 @@ std::unique_ptr<Mino> minoList[Game::FIELD_HEIGHT][Game::FIELD_WIDTH];
 std::unique_ptr<TetriMino> current;
 std::unique_ptr<Game> game;
 
+//--------------------------------------------------------------------------------
 // エラーコールバック
 void ErrorCallback2(int error, const char* description)
 {
 	std::cerr << "Error Occured code: " << error << " desc: " << description << "\n";
 }
 
+//--------------------------------------------------------------------------------
 // 入力コールバック
 void KeyCallback2(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
@@ -114,6 +116,7 @@ void KeyCallback2(GLFWwindow* window, int key, int scancode, int action, int mod
 #define GetCurrentDir getcwd
 #endif
 
+//--------------------------------------------------------------------------------
 std::string GetCurrentWorkingDir(void)
 {
 	char buff[FILENAME_MAX];
@@ -122,6 +125,8 @@ std::string GetCurrentWorkingDir(void)
 	return current_working_dir;
 }
 
+//--------------------------------------------------------------------------------
+// ENTRY POINT
 int main()
 {
 	std::cout << "current directory is " << GetCurrentWorkingDir().c_str() << "\n";

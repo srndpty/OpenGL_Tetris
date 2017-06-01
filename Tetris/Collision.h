@@ -1,3 +1,6 @@
+// Collision.h
+// Õ“Ë”»’è‚ğ‚Â‚©‚³‚Ç‚éƒtƒ@ƒCƒ‹
+
 #pragma once
 
 #include "Sprite.h"

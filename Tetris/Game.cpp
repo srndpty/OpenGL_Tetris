@@ -1,11 +1,12 @@
 #include "Game.h"
 
-
+// static data
 float Game::BLOCK_SIDE_LENGTH = 0.09f;
 Vec2f Game::BLOCK_SIZE = { BLOCK_SIDE_LENGTH, BLOCK_SIDE_LENGTH };
 Vec2f Game::FIELD_BOT_LEFT = { -0.55f, -0.50f };
 Vec2i Game::FIELD_SIZE = { FIELD_WIDTH, FIELD_HEIGHT };
 
+//--------------------------------------------------------------------------------
 Game::Game()
 	//:mExists{}
 {
@@ -26,10 +27,12 @@ Game::Game()
 }
 
 
+//--------------------------------------------------------------------------------
 Game::~Game()
 {
 }
 
+//--------------------------------------------------------------------------------
 void Game::Process()
 {
 	++mDropCount;
@@ -40,11 +43,13 @@ void Game::Process()
 	}
 }
 
+//--------------------------------------------------------------------------------
 bool Game::IsMovable(const Mino & mino, int horizontal, int vertical)
 {
 	return !mExists[mino.mPosition.y + vertical][mino.mPosition.x + horizontal];
 }
 
+//--------------------------------------------------------------------------------
 bool Game::IsMovable(const TetriMino & mino, int horizontal, int vertical)
 {
 	for (size_t i = 0; i < TetriMino::MINO_MAX; i++)
@@ -57,6 +62,7 @@ bool Game::IsMovable(const TetriMino & mino, int horizontal, int vertical)
 	return true;
 }
 
+//--------------------------------------------------------------------------------
 bool Game::IsRotatable(const TetriMino & mino)
 {
 	for (size_t i = 0; i < TetriMino::MINO_MAX; i++)
@@ -71,11 +77,13 @@ bool Game::IsRotatable(const TetriMino & mino)
 	return true;
 }
 
+//--------------------------------------------------------------------------------
 void Game::PlaceCurrent(const Mino& mino)
 {
 	mExists[mino.mPosition.y][mino.mPosition.x] = true;
 }
 
+//--------------------------------------------------------------------------------
 void Game::PlaceCurrent(const TetriMino & mino)
 {
 	for (size_t i = 0; i < TetriMino::MINO_MAX; i++)
@@ -87,11 +95,12 @@ void Game::PlaceCurrent(const TetriMino & mino)
 	}
 }
 
+//--------------------------------------------------------------------------------
 void Game::DropLines()
 {
 	int targetLine = SENTINELS_COUNT;
 
-	for (size_t i = SENTINELS_COUNT; i < FIELD_HEIGHT; i++)
+	for (int i = SENTINELS_COUNT; i < FIELD_HEIGHT; i++)
 	{
 		MoveLine(i, targetLine);
 		if (!IsLineFilled(i))
@@ -101,6 +110,7 @@ void Game::DropLines()
 	}
 }
 
+//--------------------------------------------------------------------------------
 bool Game::IsLineFilled(int y)
 {
 	for (size_t i = SENTINELS_COUNT; i < FIELD_WIDTH - SENTINELS_COUNT; i++)
@@ -113,6 +123,7 @@ bool Game::IsLineFilled(int y)
 	return true;
 }
 
+//--------------------------------------------------------------------------------
 void Game::MoveLine(int from, int to)
 {
 	for (size_t i = SENTINELS_COUNT; i < FIELD_WIDTH - SENTINELS_COUNT; i++)
@@ -121,6 +132,7 @@ void Game::MoveLine(int from, int to)
 	}
 }
 
+//--------------------------------------------------------------------------------
 bool Game::IsGameOver()
 {
 	return mExists[Game::FIELD_HEIGHT - Game::SENTINELS_COUNT - 1][Game::FIELD_WIDTH / 2];

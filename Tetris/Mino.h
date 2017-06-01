@@ -1,3 +1,6 @@
+// Mino.h
+// ブロック1個分を表す
+
 #pragma once
 
 #include "Sprite.h"
@@ -5,28 +8,24 @@
 // テトリミノ1個分のオブジェクト
 class Mino : public Sprite<4>
 {
-	// variables
 public:
-	// static
 	static const int VERTS_COUNT = 4;
 
-	Vec2i mPosition{};
-	Vec2i mOffset{};
+	Vec2i mPosition{}; // 位置
+	Vec2i mOffset{}; // テトリミノにおける、中心のブロックの位置から見たoffset
 
 private:
-	// non-static
 	int mDropCount = 0;
 
 
-	// functions
 public:
-	// special
+	/// special
 	Mino();
 	Mino(Vec2f aPos);
 	Mino(int aX, int aY);
 	~Mino();
 
-	// normal
+	/// normal
 	void Move(const Vec2i& amount);
 	void SetPos(const Vec2i& pos);
 

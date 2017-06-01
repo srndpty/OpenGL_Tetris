@@ -16,11 +16,13 @@ MinoType TetriMino::minoTypes[MINO_TYPE_MAX] =
 	{ Vec2i{ 0, 0 },Vec2i{-1, 0 },Vec2i{ 0,-1 },Vec2i{+1,-1 }, }, // Z
 };
 
+//--------------------------------------------------------------------------------
 TetriMino::TetriMino()
 {
 }
 
 
+//--------------------------------------------------------------------------------
 TetriMino::TetriMino(Vec2i aPos)
 {
 	for (size_t i = 0; i < MINO_MAX; i++)
@@ -32,10 +34,12 @@ TetriMino::TetriMino(Vec2i aPos)
 	SetPos(mPosition);
 }
 
+//--------------------------------------------------------------------------------
 TetriMino::~TetriMino()
 {
 }
 
+//--------------------------------------------------------------------------------
 void TetriMino::SetType(int type)
 {
 	assert(type < MINO_TYPE_MAX);
@@ -46,6 +50,7 @@ void TetriMino::SetType(int type)
 	}
 }
 
+//--------------------------------------------------------------------------------
 void TetriMino::SetPos(const Vec2i& pos)
 {
 	mPosition = pos;
@@ -55,12 +60,14 @@ void TetriMino::SetPos(const Vec2i& pos)
 	}
 }
 
+//--------------------------------------------------------------------------------
 void TetriMino::Move(const Vec2i& amount)
 {
 	mPosition += amount;
 	SetPos(mPosition);
 }
 
+//--------------------------------------------------------------------------------
 void TetriMino::Draw(int texId)
 {
 	for (size_t i = 0; i < MINO_MAX; i++)
@@ -69,6 +76,7 @@ void TetriMino::Draw(int texId)
 	}
 }
 
+//--------------------------------------------------------------------------------
 void TetriMino::Rotate()
 {
 	for (size_t i = 0; i < MINO_MAX; i++)

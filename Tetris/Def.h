@@ -1,3 +1,6 @@
+// Def.h
+// ‹¤’Ê’è‹`‚ğ‹Lq‚·‚é
+
 #pragma once
 
 // define

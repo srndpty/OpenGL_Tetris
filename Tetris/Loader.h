@@ -1,3 +1,6 @@
+// Loader.h
+// ‰æ‘œ‚Ì“Ç‚İ‚İ‚ğ‚Ü‚Æ‚ß‚é
+
 #pragma once
 
 #include "GLFW/glfw3.h"
@@ -5,6 +8,7 @@
 #include <iostream>
 #include <fstream>
 
+// bmp‰æ‘œ‚Ì“Ç‚İ‚İ
 GLuint LoadBmp(const char* filename)
 {
 	static constexpr int bmpHeaderSize = 54;

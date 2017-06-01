@@ -4,16 +4,19 @@
 #include "Mino.h"
 
 
+//--------------------------------------------------------------------------------
 Mino::Mino()
 {
 	std::cout << "Mino default constructor called.\n";
 }
 
+//--------------------------------------------------------------------------------
 Mino::Mino(Vec2f aPos)
 {
 	InitInfo(Game::BLOCK_SIZE, aPos);
 }
 
+//--------------------------------------------------------------------------------
 Mino::Mino(int aX, int aY)
 {
 	mPosition = { aX, aY };
@@ -22,23 +25,27 @@ Mino::Mino(int aX, int aY)
 	InitInfo(Game::BLOCK_SIZE, pos);
 }
 
+//--------------------------------------------------------------------------------
 Mino::~Mino()
 {
 }
 
 
+//--------------------------------------------------------------------------------
 void Mino::Move(const Vec2i& amount)
 {
 	mPosition += amount;
 	ApplyPos();
 }
 
+//--------------------------------------------------------------------------------
 void Mino::SetPos(const Vec2i& pos)
 {
 	mPosition = pos;
 	ApplyPos();
 }
 
+//--------------------------------------------------------------------------------
 void Mino::InitInfo(Vec2f aSize, Vec2f aPos)
 {
 	vertex[0] = geom[0] = { -aSize.x / 2, +aSize.y / 2 };
@@ -53,6 +60,7 @@ void Mino::InitInfo(Vec2f aSize, Vec2f aPos)
 	size = aSize * 0.5f;
 }
 
+//--------------------------------------------------------------------------------
 void Mino::ApplyPos()
 {
 	pos = { Game::FIELD_BOT_LEFT.x + Game::BLOCK_SIZE.x / 2 * mPosition.x,

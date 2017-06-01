@@ -1,3 +1,6 @@
+// Sprite.h
+// 画像1枚分を管理する
+
 #pragma once
 
 #include "glad/glad.h"
@@ -14,9 +17,11 @@ template<int VERTS_COUNT>
 class Sprite
 {
 public:
+	/// special
 	Sprite() = default;
 	virtual ~Sprite() = default;
 
+	/// normal
 	// 描画
 	void Draw(int texId)
 	{
@@ -44,13 +49,13 @@ public:
 	}
 
 public:
-	Vec2f size{};
-	Vec2f pos{}; // 座標
-	Vec2f vertex[VERTS_COUNT]{}; // offset
-	Vec2f geom[VERTS_COUNT]{}; // 実際の値
+	Vec2f size{}; // サイズ
+	Vec2f pos{}; // オブジェクトの中心座標
+	Vec2f vertex[VERTS_COUNT]{}; // 中心座標からのoffset（固定）
+	Vec2f geom[VERTS_COUNT]{}; // 実際のワールド座標
 	Vec2f uv[VERTS_COUNT]{}; // uv
 
 private:
-	mat4x4 m, p, mvp;
+	mat4x4 m, p, mvp; // 計算用変数
 };
 

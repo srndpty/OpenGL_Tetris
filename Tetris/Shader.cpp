@@ -10,15 +10,18 @@ const char* Shader::ID_uv = "uv";
 const char* Shader::ID_texture = "texture";
 const char* Shader::ID_MVP = "MVP";
 
+//--------------------------------------------------------------------------------
 Shader::Shader()
 {
 }
 
 
+//--------------------------------------------------------------------------------
 Shader::~Shader()
 {
 }
 
+//--------------------------------------------------------------------------------
 void Shader::SetUp()
 {
 	//static const int VERTEX_BUFFER_COUNT = 4;
