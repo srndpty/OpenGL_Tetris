@@ -44,6 +44,7 @@ void TetriMino::SetType(int type)
 {
 	assert(type < MINO_TYPE_MAX);
 
+	mType = type;
 	for (size_t i = 0; i < MINO_MAX; i++)
 	{
 		mMinos[i]->mOffset = minoTypes[type].offset[i];

@@ -226,6 +226,11 @@ int main()
 				else
 				{
 					game->PlaceCurrent(*current);
+					for (size_t i = 0; i < TetriMino::MINO_MAX; i++)
+					{
+						auto pos = current->mMinos[i]->mPosition;
+						minoList[pos.y][pos.x]->SetColor(current->minoTypes[current->mType].color);
+					}
 					game->DropLines();
 					current->SetType(random(TetriMino::MINO_TYPE_MAX));
 					current->SetPos({ Game::FIELD_WIDTH / 2, Game::FIELD_HEIGHT });
