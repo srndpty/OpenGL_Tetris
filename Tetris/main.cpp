@@ -172,13 +172,31 @@ int main()
 	game = std::make_unique<Game>();
 	current = std::make_unique<TetriMino>(Vec2i{ Game::FIELD_WIDTH / 2, Game::FIELD_HEIGHT });
 
+	bool firstGameOver = true;
+
 	// ƒQ[ƒ€ƒ‹[ƒv
 	while (!glfwWindowShouldClose(window))
 	{
 		// -- ŒvŽZ --
 		if (game->IsGameOver())
 		{
-			std::cout << "Game Over!\n";
+			if (firstGameOver)
+			{
+				// Ô‚­‚·‚é
+				for (size_t i = 0; i < Game::FIELD_SIZE.y; i++)
+				{
+					for (size_t j = 0; j < Game::FIELD_SIZE.x; j++)
+					{
+						if (game->mExists[i][j])
+						{
+							minoList[i][j]->SetColor({ 1.0f, 0.0f, 0.0f, 1.0f });
+						}
+					}
+				}
+
+				std::cout << "Game Over!\n";
+				firstGameOver = false;
+			}
 		}
 		else
 		{
