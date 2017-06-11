@@ -18,68 +18,21 @@
 #include "Game.h"
 #include "TetriMino.h"
 #include "Random.h"
+#include "NumDisp.h"
 
 #pragma comment(lib, "opengl32.lib")
-
-static Vec2f NUM_SIZE = { 0.15f, 0.15f };
 
 Input input;
 Shader shader;
 Random random;
 
-template<int VertsCount = 4>
-class NumTex : public Sprite<VertsCount>
-{
-public:
-	NumTex(Vec2f aSize, Vec2f aPos)
-	{
-		static_assert(VertsCount == 4, "VertsCount == 4");
-		vertex[0] = geom[0] = { -aSize.x / 2, +aSize.y / 2 };
-		vertex[1] = geom[1] = { +aSize.x / 2, +aSize.y / 2 };
-		vertex[2] = geom[2] = { +aSize.x / 2, -aSize.y / 2 };
-		vertex[3] = geom[3] = { -aSize.x / 2, -aSize.y / 2 };
-		RefreshUv(0);
-		pos = aPos;
-		size = aSize * 0.5f;
-		// 反映
-		for (size_t i = 0; i < VertsCount; i++)
-		{
-			geom[i].x = pos.x + vertex[i].x;
-			geom[i].y = pos.y + vertex[i].y;
-		}
-	}
-
-	~NumTex()
-	{
-	}
-
-	void Update(int aNum)
-	{
-		mNum = aNum;
-		RefreshUv(aNum);
-	}
-
-	void RefreshUv(int index)
-	{
-		uv[0] = { index / 10.f, 1 };
-		uv[1] = { (index + 1) / 10.f, 1 };
-		uv[2] = { (index + 1) / 10.f, 0 };
-		uv[3] = { index / 10.f, 0 };
-	}
-
-private:
-	int mNum;
-};
-
-
-auto leftScore = std::make_unique<NumTex<>>(NUM_SIZE, Vec2f{ -0.5f, 0.4f });
-auto rightScore = std::make_unique<NumTex<>>(NUM_SIZE, Vec2f{ +0.5f, 0.4f });
 
 //auto mino = std::make_unique<Mino>(Vec2f{ 0.1f, 0.1f }, Vec2f{ 0, 0 });
 
 std::unique_ptr<Mino> minoList[Game::FIELD_HEIGHT][Game::FIELD_WIDTH];
 std::unique_ptr<TetriMino> current;
 std::unique_ptr<Game> game;
+auto score = std::make_unique<NumDisp<4>>(Vec2f{ +0.5f, 0.4f });
 
 //--------------------------------------------------------------------------------
 // エラーコールバック
@@ -156,9 +109,11 @@ int main()
 
 	shader.SetUp();
 
-	GLuint minoId = LoadBmp("mino.bmp");
+	GLuint minoId = LoadBmp("images/mino.bmp");
+	GLuint numId =  LoadBmp("images/num.bmp");
 
-	int leftPoint = 0, rightPoint = 0;
+	int point = 0;
+	int frameCount = 0;
 
 	// ミノ生成
 	for (int i = 0; i < Game::FIELD_SIZE.y; i++)
@@ -178,6 +133,8 @@ int main()
 	while (!glfwWindowShouldClose(window))
 	{
 		// -- 計算 --
+		++frameCount;
+		score->Update(frameCount);
 		if (game->IsGameOver())
 		{
 			if (firstGameOver)
@@ -263,7 +220,7 @@ int main()
 
 		// -- 描画 -- 
 		// 画面の初期化
-		glClearColor(0.2f, 0.2f, 0.2f, 0.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearDepth(1.0);
 
@@ -279,6 +236,7 @@ int main()
 		}
 
 		current->Draw(minoId);
+		score->Draw(numId);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
