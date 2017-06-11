@@ -4,7 +4,7 @@ This is Tetris game developed with OpenGL.
 ![Tetris Game](img/ss.png)
 
 ## Setup
-1. Open GLFWTest.sln with Visual Studio 2015 or later.
+1. Open Tetris.sln with Visual Studio 2015 or later.
 2. Build and run.
 
 ## Dependencies
