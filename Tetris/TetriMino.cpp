@@ -64,6 +64,7 @@ void TetriMino::SetPos(const Vec2i& pos)
 	}
 }
 
+//--------------------------------------------------------------------------------
 void TetriMino::SetForcePosition(const Vec2f & aPos)
 {
 	for (size_t i = 0; i < MINO_MAX; i++)
@@ -105,18 +106,21 @@ void TetriMino::Rotate()
 	SetPos(mPosition);
 }
 
+//--------------------------------------------------------------------------------
 void TetriMino::ResetAsType(int type)
 {
 	SetType(type);
 	SetPos({ Game::FIELD_WIDTH / 2, Game::FIELD_HEIGHT });
 }
 
+//--------------------------------------------------------------------------------
 void TetriMino::ForcePositionAsType(int type, const Vec2f & pos)
 {
 	SetType(type);
 	SetForcePosition(pos);
 }
 
+//--------------------------------------------------------------------------------
 void TetriMino::ProceedNextType()
 {
 	mNextType = random(MINO_TYPE_MAX);

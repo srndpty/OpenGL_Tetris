@@ -26,17 +26,21 @@ Input input;
 Shader shader;
 Random random;
 
-GLFWwindow* window = nullptr;
-std::unique_ptr<Mino> minoList[Game::FIELD_HEIGHT][Game::FIELD_WIDTH];
-std::unique_ptr<TetriMino> current;
-std::unique_ptr<TetriMino> next;
-std::unique_ptr<TetriMino> pocket;
-std::unique_ptr<Game> game;
-auto scoreDisp = std::make_unique<NumDisp<4>>(Vec2f{ +0.5f, 0.4f });
-bool firstGameOver = true;
-int scorePoint = 0;
-GLuint minoId;
-GLuint numId;
+namespace 
+{
+	GLFWwindow* window = nullptr;
+	std::unique_ptr<Mino> minoList[Game::FIELD_HEIGHT][Game::FIELD_WIDTH];
+	std::unique_ptr<TetriMino> current;
+	std::unique_ptr<TetriMino> next;
+	std::unique_ptr<TetriMino> pocket;
+	std::unique_ptr<Game> game;
+	auto scoreDisp = std::make_unique<NumDisp<4>>(Vec2f{ +0.5f, 0.4f });
+	bool firstGameOver = true;
+	int scorePoint = 0;
+	GLuint minoId;
+	GLuint numId;
+}
+
 
 //--------------------------------------------------------------------------------
 // エラーコールバック
