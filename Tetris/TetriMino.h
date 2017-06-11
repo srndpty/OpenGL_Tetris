@@ -23,6 +23,7 @@ public:
 	std::unique_ptr<Mino> mMinos[MINO_MAX]; // 所持する4つのブロック
 	int mType; // テトリミノのタイプ
 	int mNextType; // 次に降ってくるミノのタイプ
+	bool mIsActive = true;
 
 public:
 	/// special
@@ -37,9 +38,15 @@ public:
 	void Move(const Vec2i& amount); // 移動
 	void Draw(int texId); // 描画
 	void Rotate(); // 回転
+	void ResetAsType(int type);
+	void ForcePositionAsType(int type, const Vec2f& pos);
+	void ProceedNextType(); // 次のミノを更新する
 
 	// get/set
 	int GetNextType() const { return mNextType; }
+	void SetActive(bool isActive) { mIsActive = isActive; }
+	bool GetActive() const { return mIsActive; }
+	int GetCurrentType() const { return mType; }
 };
 
 // テトリミノのタイプを表現するクラス

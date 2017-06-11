@@ -1,6 +1,6 @@
 
 #include "TetriMino.h"
-
+#include "Game.h"
 #include "Random.h"
 
 extern Random random;
@@ -33,7 +33,7 @@ TetriMino::TetriMino(Vec2i aPos)
 	mPosition = aPos;
 	SetType(mNextType);
 	SetPos(mPosition);
-	mNextType = random(MINO_TYPE_MAX);
+	ProceedNextType();
 }
 
 //--------------------------------------------------------------------------------
@@ -52,7 +52,6 @@ void TetriMino::SetType(int type)
 		mMinos[i]->mOffset = minoTypes[type].offset[i];
 		mMinos[i]->SetColor(minoTypes[type].color);
 	}
-	mNextType = random(MINO_TYPE_MAX);
 }
 
 //--------------------------------------------------------------------------------
@@ -83,6 +82,11 @@ void TetriMino::Move(const Vec2i& amount)
 //--------------------------------------------------------------------------------
 void TetriMino::Draw(int texId)
 {
+	if (!mIsActive)
+	{
+		return;
+	}
+
 	for (size_t i = 0; i < MINO_MAX; i++)
 	{
 		mMinos[i]->Draw(texId);
@@ -99,4 +103,21 @@ void TetriMino::Rotate()
 		mMinos[i]->mOffset.y = -tmp.x;
 	}
 	SetPos(mPosition);
+}
+
+void TetriMino::ResetAsType(int type)
+{
+	SetType(type);
+	SetPos({ Game::FIELD_WIDTH / 2, Game::FIELD_HEIGHT });
+}
+
+void TetriMino::ForcePositionAsType(int type, const Vec2f & pos)
+{
+	SetType(type);
+	SetForcePosition(pos);
+}
+
+void TetriMino::ProceedNextType()
+{
+	mNextType = random(MINO_TYPE_MAX);
 }

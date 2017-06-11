@@ -22,6 +22,8 @@ public:
 	static Vec2i FIELD_SIZE;
 	static const int DELETE_LINE_POINTS = 300;
 	static const int DROP_MINO_POINTS = 2;
+	static constexpr Vec2f NEXT_MINO_POS = Vec2f{ 0.5f, 0.3f };
+	static constexpr Vec2f POCKET_MINO_POS = Vec2f{ 0.5f, 0.0f };
 
 	bool mExists[FIELD_HEIGHT][FIELD_WIDTH]; // 各マス目にブロックが存在するか否か
 	bool mToBeDropped = false; // テトリミノの落下を試みるかどうか
