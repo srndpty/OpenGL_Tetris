@@ -167,6 +167,7 @@ int main()
 			// ¶‰EˆÚ“®
 			if (input.GetButtomDown(GLFW_KEY_A))
 			{
+				// ¶
 				if (game->IsMovable(*current, -1, 0))
 				{
 					current->Move({ -1, 0 });
@@ -174,6 +175,7 @@ int main()
 			}
 			else if (input.GetButtomDown(GLFW_KEY_D))
 			{
+				// ‰E
 				if (game->IsMovable(*current, +1, 0))
 				{
 					current->Move({ +1, 0 });
@@ -181,6 +183,7 @@ int main()
 			}
 			else if (input.GetButtomDown(GLFW_KEY_S))
 			{
+				// ‰º
 				if (game->IsMovable(*current, 0, -1))
 				{
 					current->Move({ 0, -1 });
@@ -188,11 +191,21 @@ int main()
 			}
 			else if (input.GetButtomDown(GLFW_KEY_W))
 			{
+				// ‰ñ“]
 				if (game->IsRotatable(*current))
 				{
 					current->Rotate();
 				}
 			}
+			else if (input.GetButtomDown(GLFW_KEY_ENTER))
+			{
+				// ‚¢‚Á‚Ø‚ñ‚É—Ž‰º
+				while (game->IsMovable(*current, 0, -1))
+				{
+					current->Move({ 0, -1 });
+				}
+			}
+
 
 
 			// —Ž‰º
