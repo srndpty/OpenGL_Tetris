@@ -20,6 +20,8 @@ public:
 	static const int FIELD_HEIGHT = 20 + SENTINELS_COUNT * 2; // ゲームオーバー判定用の上の部分を追加
 	static const int DROP_INTERVAL = 20;
 	static Vec2i FIELD_SIZE;
+	static const int DELETE_LINE_POINTS = 300;
+	static const int DROP_MINO_POINTS = 2;
 
 	bool mExists[FIELD_HEIGHT][FIELD_WIDTH]; // 各マス目にブロックが存在するか否か
 	bool mToBeDropped = false; // テトリミノの落下を試みるかどうか
@@ -40,7 +42,7 @@ public:
 	bool IsRotatable(const TetriMino& mino); // 回転可能判定
 	void PlaceCurrent(const Mino& mino); // 現在のオブジェクトを今の位置で設置確定させる
 	void PlaceCurrent(const TetriMino& mino); // 現在のオブジェクトを今の位置で設置確定させる
-	void DropLines(); // そろっているラインを検出し、ブロックを全体的に卸す
+	int DropLines(); // そろっているラインを検出し、ブロックを全体的に卸す ret: 消した行数
 	bool IsGameOver(); // ゲームオーバー判定
 
 private:

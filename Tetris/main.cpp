@@ -33,7 +33,7 @@ std::unique_ptr<Mino> minoList[Game::FIELD_HEIGHT][Game::FIELD_WIDTH];
 std::unique_ptr<TetriMino> current;
 std::unique_ptr<TetriMino> next;
 std::unique_ptr<Game> game;
-auto score = std::make_unique<NumDisp<4>>(Vec2f{ +0.5f, 0.4f });
+auto scoreDisp = std::make_unique<NumDisp<4>>(Vec2f{ +0.5f, 0.4f });
 
 //--------------------------------------------------------------------------------
 // エラーコールバック
@@ -132,13 +132,13 @@ int main()
 	next->SetForcePosition({ 0.5f, 0.3f });
 
 	bool firstGameOver = true;
+	int scorePoint = 0;
 
 	// ゲームループ
 	while (!glfwWindowShouldClose(window))
 	{
 		// -- 計算 --
-		++frameCount;
-		score->Update(frameCount);
+		scoreDisp->Update(scorePoint);
 		if (game->IsGameOver())
 		{
 			if (firstGameOver)
@@ -187,6 +187,7 @@ int main()
 				if (game->IsMovable(*current, 0, -1))
 				{
 					current->Move({ 0, -1 });
+					scorePoint += Game::DROP_MINO_POINTS;
 				}
 			}
 			else if (input.GetButtomDown(GLFW_KEY_W))
@@ -203,6 +204,7 @@ int main()
 				while (game->IsMovable(*current, 0, -1))
 				{
 					current->Move({ 0, -1 });
+					scorePoint += Game::DROP_MINO_POINTS;
 				}
 			}
 
@@ -223,7 +225,8 @@ int main()
 						auto pos = current->mMinos[i]->mPosition;
 						minoList[pos.y][pos.x]->SetColor(current->minoTypes[current->mType].color);
 					}
-					game->DropLines();
+					int deletedLines = game->DropLines();
+					scorePoint += deletedLines * Game::DELETE_LINE_POINTS;
 					current->SetType(current->GetNextType());
 					next->SetType(current->GetNextType());
 					next->SetForcePosition({ 0.5f, 0.3f });
@@ -256,7 +259,7 @@ int main()
 
 		current->Draw(minoId);
 		next->Draw(minoId);
-		score->Draw(numId);
+		scoreDisp->Draw(numId);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();

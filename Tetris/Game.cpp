@@ -96,9 +96,10 @@ void Game::PlaceCurrent(const TetriMino & mino)
 }
 
 //--------------------------------------------------------------------------------
-void Game::DropLines()
+int Game::DropLines()
 {
 	int targetLine = SENTINELS_COUNT;
+	int deletedLines = 0;
 
 	for (int i = SENTINELS_COUNT; i < FIELD_HEIGHT; i++)
 	{
@@ -107,7 +108,13 @@ void Game::DropLines()
 		{
 			++targetLine;
 		}
+		else
+		{
+			++deletedLines;
+		}
 	}
+
+	return deletedLines;
 }
 
 //--------------------------------------------------------------------------------
