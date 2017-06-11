@@ -30,10 +30,17 @@ public:
 	// dtor
 	~Vec2() = default;
 
+
+
 	// multiply
 	Vec2 operator*(T a)
 	{
 		return{ x * a, y * a };
+	}
+
+	Vec2 operator*(const Vec2& a)
+	{
+		return{ x * a.x, y * a.y };
 	}
 
 	// plus

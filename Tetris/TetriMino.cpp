@@ -24,14 +24,16 @@ TetriMino::TetriMino()
 
 //--------------------------------------------------------------------------------
 TetriMino::TetriMino(Vec2i aPos)
+	: mNextType(random(MINO_TYPE_MAX))
 {
 	for (size_t i = 0; i < MINO_MAX; i++)
 	{
 		mMinos[i] = std::make_unique<Mino>(0, 0);
 	}
 	mPosition = aPos;
-	SetType(random(MINO_TYPE_MAX));
+	SetType(mNextType);
 	SetPos(mPosition);
+	mNextType = random(MINO_TYPE_MAX);
 }
 
 //--------------------------------------------------------------------------------
@@ -50,6 +52,7 @@ void TetriMino::SetType(int type)
 		mMinos[i]->mOffset = minoTypes[type].offset[i];
 		mMinos[i]->SetColor(minoTypes[type].color);
 	}
+	mNextType = random(MINO_TYPE_MAX);
 }
 
 //--------------------------------------------------------------------------------
@@ -59,6 +62,14 @@ void TetriMino::SetPos(const Vec2i& pos)
 	for (size_t i = 0; i < MINO_MAX; i++)
 	{
 		mMinos[i]->SetPos(pos + mMinos[i]->mOffset);
+	}
+}
+
+void TetriMino::SetForcePosition(const Vec2f & aPos)
+{
+	for (size_t i = 0; i < MINO_MAX; i++)
+	{
+		mMinos[i]->pos = aPos + Vec2f(mMinos[i]->mOffset.x * mMinos[i]->size.x, mMinos[i]->mOffset.y * mMinos[i]->size.y);
 	}
 }
 

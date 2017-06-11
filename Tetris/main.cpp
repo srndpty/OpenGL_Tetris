@@ -31,6 +31,7 @@ Random random;
 
 std::unique_ptr<Mino> minoList[Game::FIELD_HEIGHT][Game::FIELD_WIDTH];
 std::unique_ptr<TetriMino> current;
+std::unique_ptr<TetriMino> next;
 std::unique_ptr<Game> game;
 auto score = std::make_unique<NumDisp<4>>(Vec2f{ +0.5f, 0.4f });
 
@@ -126,6 +127,9 @@ int main()
 
 	game = std::make_unique<Game>();
 	current = std::make_unique<TetriMino>(Vec2i{ Game::FIELD_WIDTH / 2, Game::FIELD_HEIGHT });
+	next = std::make_unique<TetriMino>(Vec2i{ Game::FIELD_WIDTH / 2, Game::FIELD_HEIGHT });
+	next->SetType(current->GetNextType());
+	next->SetForcePosition({ 0.5f, 0.3f });
 
 	bool firstGameOver = true;
 
@@ -207,7 +211,9 @@ int main()
 						minoList[pos.y][pos.x]->SetColor(current->minoTypes[current->mType].color);
 					}
 					game->DropLines();
-					current->SetType(random(TetriMino::MINO_TYPE_MAX));
+					current->SetType(current->GetNextType());
+					next->SetType(current->GetNextType());
+					next->SetForcePosition({ 0.5f, 0.3f });
 					current->SetPos({ Game::FIELD_WIDTH / 2, Game::FIELD_HEIGHT });
 				}
 				game->mToBeDropped = false;
@@ -236,6 +242,7 @@ int main()
 		}
 
 		current->Draw(minoId);
+		next->Draw(minoId);
 		score->Draw(numId);
 
 		glfwSwapBuffers(window);
